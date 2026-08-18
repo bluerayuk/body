@@ -1,0 +1,487 @@
+/* compact-mode.css - COMPACT MODE with Dynamic Height System */
+/* OPTIMIZED: Works perfectly with dynamic height calculator */
+/* NO visual changes - only adjust container heights */
+
+body.compact-mode {
+    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden !important; /* Prevent body scroll */
+}
+
+/* Make app container fit perfectly in viewport */
+body.compact-mode .app-container {
+    max-width: 100%;
+    width: 100%;
+    min-width: 800px;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+/* COMPACT MODE: Dynamic height adjustments - EXTENDED 30% MORE */
+/* Calculator and results use MAXIMUM space in compact mode */
+body.compact-mode #calculator .input-card {
+    position: sticky;
+    top: 3px; /* ULTRA CLOSE to viewport edge! */
+    max-height: calc(100vh - 65px); /* MASSIVELY INCREASED from 95px - 30px MORE! */
+    overflow-y: auto;
+    overflow-x: hidden;
+    transform: scale(0.95); /* Slightly smaller for compact */
+    transform-origin: top left;
+    margin-right: -2.5%; /* Compensate for scale */
+}
+
+body.compact-mode #calculator .results-panel {
+    max-height: calc(100vh - 65px); /* MASSIVELY INCREASED from 95px - matches calculator */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+body.compact-mode #calculator .content-grid {
+    grid-template-columns: 1.05fr 0.95fr !important; /* Balanced ratio */
+    gap: 10px !important; /* Tighter gap */
+    align-items: start;
+}
+
+/* Rest Timer stays sticky on workout tab */
+body.compact-mode #restTimerCard {
+    position: sticky !important;
+    top: 10px !important;
+}
+
+/* Reduce header height - ABSOLUTE MINIMUM */
+body.compact-mode .app-header {
+    padding: 3px 12px; /* REDUCED from 4px 14px - saves 4px */
+    flex-shrink: 0;
+}
+
+body.compact-mode .app-header h1 {
+    font-size: 14px; /* REDUCED from 15px */
+    line-height: 1;
+}
+
+body.compact-mode .header-right {
+    gap: 5px; /* REDUCED from 6px */
+}
+
+body.compact-mode .header-right button {
+    padding: 3px 7px; /* REDUCED from 4px 8px */
+    font-size: 10px; /* REDUCED from 11px */
+    line-height: 1;
+}
+
+body.compact-mode .profile-selector {
+    padding: 3px 7px; /* REDUCED from 4px 8px */
+    font-size: 10px; /* REDUCED from 11px */
+    min-width: 110px; /* REDUCED from 120px */
+    line-height: 1;
+}
+
+/* Reduce nav tabs height - ABSOLUTE MINIMUM */
+body.compact-mode .nav-tabs {
+    padding: 3px 12px; /* REDUCED from 4px 14px - saves 4px */
+    gap: 3px; /* REDUCED from 4px */
+    flex-shrink: 0;
+}
+
+body.compact-mode .nav-tab {
+    padding: 3px 9px; /* REDUCED from 4px 10px */
+    font-size: 10px; /* REDUCED from 11px */
+    line-height: 1;
+}
+
+/* Main content area fills remaining space */
+body.compact-mode .app-main {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+body.compact-mode .tab-content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+body.compact-mode .tab-pane.active {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* Reduce container padding - ABSOLUTE MINIMUM */
+body.compact-mode .container {
+    padding: 3px 8px; /* REDUCED from 5px 10px - saves 6px */
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* Content grid fills remaining space */
+body.compact-mode .content-grid {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Reduce card padding - ABSOLUTE MINIMUM */
+body.compact-mode .card {
+    padding: 12px; /* REDUCED from 15px - saves 6px per card */
+    margin-bottom: 8px; /* REDUCED from 10px */
+    border-radius: 8px; /* REDUCED from 10px */
+}
+
+/* Reduce card titles - ABSOLUTE MINIMUM */
+body.compact-mode .card h2 {
+    font-size: 14px; /* REDUCED from 15px */
+    margin-bottom: 10px; /* REDUCED from 12px */
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+/* Reduce form spacing - ABSOLUTE MINIMUM */
+body.compact-mode .form-group {
+    margin-bottom: 9px; /* REDUCED from 11px - saves 2px per field */
+}
+
+body.compact-mode .form-group label {
+    margin-bottom: 4px; /* REDUCED from 5px */
+    font-size: 11px; /* REDUCED from 12px */
+    font-weight: 600;
+    line-height: 1;
+}
+
+/* FORCE two-column layout in compact mode - NEVER stack */
+body.compact-mode .content-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+}
+
+/* Reduce button padding */
+body.compact-mode .btn {
+    padding: 10px 18px; /* Reduced from 12px 20px */
+    font-size: 13px; /* Reduced from 15px */
+    font-weight: 600;
+}
+
+body.compact-mode .form-group input,
+body.compact-mode .form-group select {
+    padding: 10px 14px; /* Reduced from 12px 16px */
+    font-size: 13px; /* Reduced from 15px */
+}
+
+/* Reduce activity button height - ABSOLUTE MINIMUM */
+body.compact-mode .activity-btn {
+    min-height: 65px; /* REDUCED from 72px - saves 7px */
+    padding: 9px 7px !important; /* REDUCED from 10px 8px */
+    gap: 3px; /* REDUCED from 4px */
+}
+
+body.compact-mode .activity-btn-title {
+    font-size: 11px; /* REDUCED from 12px */
+    font-weight: 700;
+    line-height: 1;
+}
+
+body.compact-mode .activity-btn-desc {
+    font-size: 9px; /* REDUCED from 10px */
+    line-height: 1.2;
+}
+
+/* Reduce user type buttons */
+body.compact-mode .user-type-btn {
+    min-height: 68px; /* Reduced from 90px */
+    padding: 12px 14px; /* Reduced from 16px 18px */
+}
+
+body.compact-mode .user-type-btn-title {
+    font-size: 14px; /* Reduced from 16px */
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+body.compact-mode .user-type-btn-desc {
+    font-size: 11px; /* Reduced from 13px */
+    margin-bottom: 3px;
+    line-height: 1.3;
+}
+
+body.compact-mode .user-type-btn-meta {
+    font-size: 10px; /* Reduced from 12px */
+}
+
+/* Reduce button group spacing */
+body.compact-mode .button-group {
+    gap: 10px; /* Reduced from 14px */
+}
+
+body.compact-mode .button-group button {
+    padding: 10px 16px; /* Reduced from 14px 20px */
+    font-size: 13px; /* Reduced from 15px */
+    font-weight: 600;
+}
+
+body.compact-mode .activity-buttons {
+    gap: 10px; /* Reduced from 14px */
+}
+
+/* Reduce stats card padding */
+body.compact-mode .stat-card {
+    padding: 18px; /* Increased from 17px */
+}
+
+body.compact-mode .stat-card-title {
+    font-size: 12px; /* Increased */
+    margin-bottom: 10px; /* Increased */
+}
+
+body.compact-mode .stat-card-value {
+    font-size: 32px; /* Increased from 31px */
+}
+
+/* Make tables more compact */
+body.compact-mode table {
+    font-size: 12px; /* Reduced from 14px */
+}
+
+body.compact-mode table th,
+body.compact-mode table td {
+    padding: 8px; /* Reduced from 9px */
+}
+
+/* Reduce result cards */
+body.compact-mode .result-card {
+    padding: 18px; /* Reduced from 20px */
+    border-radius: 10px; /* Reduced from 11px */
+}
+
+body.compact-mode .result-card-title {
+    font-size: 11px; /* Reduced from 13px */
+    margin-bottom: 7px; /* Reduced from 9px */
+}
+
+body.compact-mode .result-card-value {
+    font-size: 28px; /* Reduced from 33px */
+    margin-bottom: 5px; /* Reduced from 7px */
+}
+
+body.compact-mode .result-card-description {
+    font-size: 12px; /* Reduced from 14px */
+}
+
+/* Reduce placeholder padding */
+body.compact-mode .placeholder {
+    padding: 28px 14px; /* Reduced from 33px 17px */
+    font-size: 14px; /* Reduced from 17px */
+}
+
+/* Reduce form row gaps */
+body.compact-mode .form-row {
+    gap: 12px; /* Reduced from 16px */
+}
+
+/* Reduce stats grid gap */
+body.compact-mode .stats-grid {
+    gap: 14px; /* Reduced from 17px */
+    margin-bottom: 18px; /* Reduced from 22px */
+}
+
+/* Ensure content never causes horizontal scroll */
+body.compact-mode * {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+body.compact-mode .app-container,
+body.compact-mode .app-header,
+body.compact-mode .app-main,
+body.compact-mode .tab-content,
+body.compact-mode .tab-pane,
+body.compact-mode .container,
+body.compact-mode .content-grid,
+body.compact-mode .card {
+    overflow-x: hidden;
+}
+
+/* Prevent any element from extending beyond viewport */
+body.compact-mode html,
+body.compact-mode body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+}
+
+/* COMPACT MODE: Custom scrollbar adjustments */
+body.compact-mode #calculator .input-card::-webkit-scrollbar,
+body.compact-mode #calculator .results-panel::-webkit-scrollbar {
+    width: 6px; /* Thinner in compact mode */
+}
+
+body.compact-mode #calculator .input-card,
+body.compact-mode #calculator .results-panel {
+    scrollbar-width: thin;
+}
+
+/* Compact Mode Toggle Button */
+#compactToggle {
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#compactToggle:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+/* Highlight button when compact mode is active */
+body.compact-mode #compactToggle {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* RESULTS GRID: Optimized spacing in compact mode */
+body.compact-mode #calculator .results-grid {
+    gap: 14px; /* Tighter spacing */
+    padding-bottom: 10px;
+}
+
+/* SMOOTH SCROLLING: Same as normal mode */
+body.compact-mode #calculator .input-card,
+body.compact-mode #calculator .results-panel {
+    scroll-behavior: smooth;
+}
+
+/* ENSURE NO GAPS: Perfect fit */
+body.compact-mode #calculator .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+body.compact-mode #calculator .content-grid {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* WORKOUT SETS: Keep sets in a row in compact mode */
+body.compact-mode [id^="set-container-"] {
+    min-width: 80px !important;
+    padding: 6px !important;
+    gap: 3px !important;
+}
+
+body.compact-mode [id^="set-container-"] input[type="number"] {
+    padding: 5px !important;
+    font-size: 12px !important;
+}
+
+body.compact-mode [id^="set-container-"] > div:first-child {
+    font-size: 9px !important;
+}
+
+body.compact-mode [id^="set-container-"] label {
+    font-size: 10px !important;
+}
+
+/* Force sets to stay in a single row - no wrapping */
+body.compact-mode td > div[style*="flex-wrap: wrap"] {
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    overflow-x: auto;
+}
+
+/* MOBILE FALLBACK: Disable compact features on small screens */
+@media (max-width: 1024px) {
+    body.compact-mode #calculator .input-card {
+        position: static !important;
+        max-height: none !important;
+        overflow-y: visible !important;
+        transform: none !important;
+        margin-right: 0 !important;
+    }
+    
+    body.compact-mode #calculator .results-panel {
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+    
+    body.compact-mode #calculator .content-grid {
+        grid-template-columns: 1fr !important;
+        height: auto !important;
+    }
+}
+
+/* ========================================================================== */
+/* THE ABSOLUTE SCROLL FIX - OVERRIDING ALL FLEX TRAPS                        */
+/* ========================================================================== */
+
+/* 1. Ensure the main wrappers pass down their height correctly */
+body.compact-mode .app-main,
+body.compact-mode .tab-content {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* 2. Make the tabs themselves the scrolling boundary */
+/* The critical fix here is 'height: 100% !important' which forces the tab to stop growing at the bottom of the screen, triggering the scrollbar */
+body.compact-mode #routines.tab-pane.active,
+body.compact-mode #tracker.tab-pane.active,
+body.compact-mode #workout.tab-pane.active {
+    display: block !important; 
+    height: 100% !important; 
+    overflow-y: auto !important; 
+    overflow-x: hidden !important;
+    padding-right: 2px; /* Prevent scrollbar clipping */
+}
+
+/* 3. Let the inner containers grow as tall as they want */
+body.compact-mode #routines .container,
+body.compact-mode #tracker .container,
+body.compact-mode #workout .container {
+    display: block !important;
+    height: auto !important; 
+    min-height: 100% !important;
+    overflow: visible !important;
+    padding-bottom: 40px !important; 
+}
+
+/* 4. Let grids be grids without height constraints */
+body.compact-mode #routines .content-grid,
+body.compact-mode #tracker .content-grid,
+body.compact-mode #workout .content-grid {
+    display: grid !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* Custom scrollbar styling */
+body.compact-mode #routines::-webkit-scrollbar,
+body.compact-mode #tracker::-webkit-scrollbar,
+body.compact-mode #workout::-webkit-scrollbar {
+    width: 8px;
+}
+body.compact-mode #routines::-webkit-scrollbar-thumb,
+body.compact-mode #tracker::-webkit-scrollbar-thumb,
+body.compact-mode #workout::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}

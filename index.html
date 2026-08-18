@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow-x: hidden !important; max-width: 100vw !important;">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bodybuilding & TDEE Tracker</title>
+    
+    <!-- Inter Font - Professional Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CRITICAL: Inline no-scroll fix - HIGHEST PRIORITY */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        * {
+            box-sizing: border-box !important;
+        }
+        
+        body > * {
+            max-width: 100vw !important;
+        }
+    </style>
+    
+    <link rel="stylesheet" href="variables.css">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="dark-mode.css">
+    <link rel="stylesheet" href="drag-drop.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+</head>
+<body style="overflow-x: hidden !important; max-width: 100vw !important; width: 100% !important; margin: 0 !important; padding: 0 !important;">
+    <div id="app" class="app-container" style="overflow-x: hidden !important; max-width: 100vw !important; width: 100% !important;">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1>Ã°Å¸â€™Âª Bodybuilding & TDEE Tracker</h1>
+            </div>
+            <div class="header-right">
+                <button id="newProfileBtn" class="btn btn-primary" style="padding: 10px 16px; font-size: 14px;">Ã¢Å¾â€¢ New Profile</button>
+                <button id="deleteProfileBtn" class="btn btn-danger" style="padding: 10px 16px; font-size: 14px;">Ã°Å¸â€”â€˜Ã¯Â¸Â Delete Profile</button>
+                <select id="profileSelect" class="profile-selector"></select>
+                <button id="compactToggle" class="compact-toggle">
+                    <span id="compactIcon">Ã°Å¸â€â€™</span>
+                    <span id="compactText">Compact</span>
+                </button>
+                <button id="themeToggle" class="theme-toggle">Ã°Å¸Å’â„¢</button>
+            </div>
+        </header>
+
+        <!-- MAIN -->
+        <main class="app-main" style="overflow-x: hidden !important; max-width: 100% !important;">
+            <!-- TABS -->
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-tab="calculator">Ã°Å¸â€™Âª Calculator</button>
+                <button class="nav-tab" data-tab="tracker">Ã°Å¸â€œË† Tracker</button>
+                <button class="nav-tab" data-tab="routines">Ã°Å¸â€œâ€¹ Routines</button>
+                <button class="nav-tab" data-tab="workout">Ã°Å¸Ââ€¹Ã¯Â¸Â Log Workout</button>
+            </nav>
+
+            <!-- CONTENT -->
+            <div class="tab-content" style="overflow-x: hidden !important; max-width: 100% !important;">
+                
+                <!-- CALCULATOR TAB -->
+                <div id="calculator" class="tab-pane active">
+                    <div class="container">
+                        <div class="content-grid" style="grid-template-columns: 1fr 1fr;">
+                            <div class="card input-card" style="position: sticky; top: 20px; align-self: start; max-height: calc(100vh - 100px); overflow-y: auto;">
+                                <h2>Ã°Å¸â€™Âª TDEE Calculator</h2>
+                                
+                                <div class="form-group">
+                                    <label>Unit System</label>
+                                    <div class="button-group">
+                                        <button class="unit-btn active" data-unit="metric" type="button">Metric</button>
+                                        <button class="unit-btn" data-unit="imperial" type="button">Imperial</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Calculation Method</label>
+                                    <div class="button-group">
+                                        <button class="user-type-btn active" data-type="general" type="button">
+                                            <div class="user-type-btn-title">Ã°Å¸â€œÅ  Standard Method</div>
+                                            <div class="user-type-btn-desc">For most people</div>
+                                            <div class="user-type-btn-meta">Weight, Height, Age</div>
+                                        </button>
+                                        <button class="user-type-btn" data-type="athlete" type="button">
+                                            <div class="user-type-btn-title">Ã°Å¸Ââ€¹Ã¯Â¸Â Advanced Method</div>
+                                            <div class="user-type-btn-desc">Athletes & muscular builds</div>
+                                            <div class="user-type-btn-meta">+ Waist measurement required</div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <div class="button-group">
+                                        <button class="gender-btn active" data-gender="male" type="button">Male</button>
+                                        <button class="gender-btn" data-gender="female" type="button">Female</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Ethnicity (Optional)</label>
+                                    <select id="ethnicitySelect" style="width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 8px; font-size: 15px; font-family: inherit; background: var(--bg-white); color: var(--text-dark);">
+                                        <option value="prefer_not_to_say">Prefer not to say (standard calculation)</option>
+                                        <option value="caucasian">Caucasian / White</option>
+                                        <option value="african">African / Black</option>
+                                        <option value="asian">Asian / East Asian</option>
+                                        <option value="hispanic">Hispanic / Latino</option>
+                                        <option value="middle_eastern">Middle Eastern</option>
+                                        <option value="mixed">Mixed / Multiple</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">
+                                        Ã°Å¸â€™Â¡ Stored locally only - improves accuracy by ~3-5%
+                                    </p>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Age</label>
+                                        <input type="number" id="age" value="30" min="1" max="120">
+                                    </div>
+                                    <div class="form-group">
+                                        <label id="weightLabel">Weight (kg)</label>
+                                        <input type="number" id="weight" value="80" min="20" max="500" step="0.1">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label id="heightLabel">Height (cm)</label>
+                                        <input type="number" id="height" value="180" min="100" max="250" step="0.1">
+                                    </div>
+                                    <div class="form-group" id="waistInputGroup" style="display: none;">
+                                        <label id="waistLabel">Waist (cm)</label>
+                                        <input type="number" id="waist" placeholder="e.g., 85" min="40" max="200" step="0.1">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Activity Level</label>
+                                    <div class="activity-buttons">
+                                        <button class="activity-btn" data-activity="1.2" type="button">
+                                            <div class="activity-btn-title">Ã°Å¸â€ºâ€¹Ã¯Â¸Â Sedentary</div>
+                                            <div class="activity-btn-desc">Little or no exercise</div>
+                                        </button>
+                                        <button class="activity-btn" data-activity="1.375" type="button">
+                                            <div class="activity-btn-title">Ã°Å¸Å¡Â¶ Light</div>
+                                            <div class="activity-btn-desc">Light exercise 1-3 days/week</div>
+                                        </button>
+                                        <button class="activity-btn active" data-activity="1.55" type="button">
+                                            <div class="activity-btn-title">Ã°Å¸ÂÆ’ Moderate</div>
+                                            <div class="activity-btn-desc">Moderate 3-5 days/week</div>
+                                        </button>
+                                        <button class="activity-btn" data-activity="1.725" type="button">
+                                            <div class="activity-btn-title">Ã°Å¸â€™Âª Very Active</div>
+                                            <div class="activity-btn-desc">Hard exercise 6-7 days/week</div>
+                                        </button>
+                                        <button class="activity-btn" data-activity="1.9" type="button">
+                                            <div class="activity-btn-title">Ã°Å¸â€Â¥ Extreme</div>
+                                            <div class="activity-btn-desc">Very hard exercise & physical job</div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Fitness Goal</label>
+                                    <select id="goalSelector" style="width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 8px; font-size: 15px; font-family: inherit; background: var(--bg-white); color: var(--text-dark);">
+                                        <option value="aggressiveCut">Ã°Å¸â€Â¥ Aggressive Cut (-750 cal, -1 kg/week)</option>
+                                        <option value="moderateCut">Ã°Å¸â€œâ€° Moderate Cut (-500 cal, -0.5 kg/week)</option>
+                                        <option value="mildCut">Ã¢Å“â€šÃ¯Â¸Â Mild Cut (-300 cal, -0.25 kg/week)</option>
+                                        <option value="maintenance" selected>Ã¢Å¡â€“Ã¯Â¸Â Maintenance (0 cal)</option>
+                                        <option value="leanBulk">Ã°Å¸â€™Âª Lean Bulk (+300 cal, +0.25 kg/week)</option>
+                                        <option value="bulking">Ã°Å¸Å¡â‚¬ Bulking (+500 cal, +0.5 kg/week)</option>
+                                        <option value="dirtyBulk">Ã°Å¸Ââ€¢ Dirty Bulk (+800 cal, +0.75 kg/week)</option>
+                                    </select>
+                                </div>
+
+                                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                    <button id="calculateBtn" class="btn btn-primary" style="flex: 2;" type="button">Ã°Å¸â€œÅ  Calculate</button>
+                                    <button id="saveToProfileBtn" class="btn btn-success" style="flex: 1;" type="button">Ã°Å¸â€™Â¾ Save</button>
+                                </div>
+                            </div>
+
+                            <div class="results-panel">
+                                <div id="resultsContainer" class="results-grid">
+                                    <div class="placeholder">Ã°Å¸â€œÅ  Fill in details and calculate</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TRACKER TAB -->
+                <div id="tracker" class="tab-pane">
+                    <div class="container">
+                        <!-- Dual Input Cards -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                            <!-- Weight Logger -->
+                            <div class="card">
+                                <h2>Ã°Å¸â€œÅ  Log Weight</h2>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="number" id="newWeight" placeholder="Weight" step="0.1" min="10" max="500" style="flex: 1;">
+                                    <span id="trackerWeightUnit" style="font-weight: 600; min-width: 30px;">kg</span>
+                                    <button class="btn btn-primary" id="addWeightBtn" type="button">Ã¢Å¾â€¢ Add</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Waist Logger -->
+                            <div class="card">
+                                <h2>Ã°Å¸â€œÂ Log Waist</h2>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="number" id="newWaist" placeholder="Waist" step="0.1" min="20" max="200" style="flex: 1;">
+                                    <span id="trackerWaistUnit" style="font-weight: 600; min-width: 30px;">cm</span>
+                                    <button class="btn btn-primary" id="addWaistBtn" type="button">Ã¢Å¾â€¢ Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Side-by-Side: Weight Column + Waist Column -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <!-- Weight Column -->
+                            <div>
+                                <!-- Weight Stats -->
+                                <div style="margin-bottom: 20px;">
+                                    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 15px; color: var(--text-dark);">Ã°Å¸â€™Âª Weight Statistics</h3>
+                                    <div class="stats-grid" id="statsContainer" style="grid-template-columns: repeat(2, 1fr);"></div>
+                                </div>
+                                
+                                <!-- Weight Chart -->
+                                <div class="card">
+                                    <h2>Ã°Å¸â€œË† Weight Progress</h2>
+                                    <canvas id="weightChart"></canvas>
+                                </div>
+                                
+                                <!-- Weight History -->
+                                <div class="card" style="margin-top: 20px;">
+                                    <h2>Ã°Å¸â€œâ€¹ Weight History</h2>
+                                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">
+                                        Ã°Å¸â€™Â¡ <strong>Tip:</strong> Entries shown in chronological order
+                                    </p>
+                                    <div id="weightHistoryList"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Waist Column -->
+                            <div>
+                                <!-- Waist Stats -->
+                                <div style="margin-bottom: 20px;">
+                                    <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 15px; color: var(--text-dark);">Ã°Å¸â€œÂ Waist Statistics</h3>
+                                    <div class="stats-grid" id="waistStatsContainer" style="grid-template-columns: repeat(2, 1fr);"></div>
+                                </div>
+                                
+                                <!-- Waist Chart -->
+                                <div class="card">
+                                    <h2>Ã°Å¸â€œË† Waist Progress</h2>
+                                    <canvas id="waistChart"></canvas>
+                                </div>
+                                
+                                <!-- Waist History -->
+                                <div class="card" style="margin-top: 20px;">
+                                    <h2>Ã°Å¸â€œâ€¹ Waist History</h2>
+                                    <div id="waistHistoryList"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROUTINES TAB -->
+                <div id="routines" class="tab-pane">
+                    <div class="container">
+                        <!-- Custom Exercise Management Buttons -->
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                            <button class="btn btn-success" 
+                                    id="addCustomExerciseBtn" 
+                                    style="flex: 1;"
+                                    type="button">
+                                Ã¢Å¾â€¢ Add Custom Exercise
+                            </button>
+                            <button class="btn btn-primary" 
+                                    id="manageCustomExercisesBtn" 
+                                    style="flex: 1;"
+                                    type="button">
+                                Ã°Å¸â€”â€šÃ¯Â¸Â Manage Custom Exercises
+                            </button>
+                        </div>
+                        
+                        <div class="content-grid">
+                            <!-- Build New Routine -->
+                            <div class="card">
+                                <h2>Ã°Å¸â€”â€šÃ¯Â¸Â Build Routine</h2>
+                                
+                                <div class="form-group">
+                                    <label>Muscle Group</label>
+                                    <select id="muscleGroupSelect"></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Exercise</label>
+                                    <select id="exerciseSelect"></select>
+                                </div>
+
+                                <!-- Row 1: Sets and Rest -->
+                                <div class="form-row" style="margin-bottom: 12px;">
+                                    <div class="form-group">
+                                        <label>Sets</label>
+                                        <input type="number" id="setsInput" value="3" min="1" max="10">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Rest (sec)</label>
+                                        <input type="number" id="restInput" value="60" min="0" max="300">
+                                    </div>
+                                </div>
+                                
+                                <!-- Row 2: Rep Range (3 fields) -->
+                                <div class="form-group" style="margin-bottom: 12px;">
+                                    <label style="margin-bottom: 8px; display: block; font-weight: 600;">
+                                        Rep Range & Current Progress
+                                    </label>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 10px;">
+                                        <div>
+                                            <label style="color: #3b82f6; font-size: 11px; margin-bottom: 4px; display: block; font-weight: 600;">
+                                                Ã°Å¸â€œâ€° Min Reps
+                                            </label>
+                                            <input type="number" id="minRepsInput" value="6" min="1" max="100" 
+                                                   style="border-color: #3b82f6; width: 100%;"
+                                                   title="Starting point of your rep range">
+                                        </div>
+                                        <div>
+                                            <label style="color: #10b981; font-size: 11px; margin-bottom: 4px; display: block; font-weight: 600;">
+                                                Ã°Å¸â€œË† Max Reps
+                                            </label>
+                                            <input type="number" id="maxRepsInput" value="8" min="1" max="100" 
+                                                   style="border-color: #10b981; width: 100%;"
+                                                   title="Goal reps in your range">
+                                        </div>
+                                        <div>
+                                            <label style="color: #f59e0b; font-size: 11px; font-weight: 700; margin-bottom: 4px; display: block;">
+                                                Ã¢Å¡Â¡ Current Reps
+                                            </label>
+                                            <input type="number" id="currentRepsInput" value="6" min="1" max="100"
+                                                   style="border: 2px solid #f59e0b; background: rgba(245, 158, 11, 0.05); width: 100%;"
+                                                   title="Your working reps now (start at min)">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Progressive Overload Info -->
+                                <div style="background: linear-gradient(135deg, #e0f2fe, #bae6fd); padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; font-size: 11px; color: #0c4a6e; line-height: 1.5;">
+                                    <strong>Ã°Å¸â€™Â¡ Progressive Overload Strategy:</strong><br>
+                                    <strong style="color: #3b82f6;">Min Reps (6)</strong> Ã¢â€ â€™ Complete all sets Ã¢â€ â€™ 
+                                    <strong style="color: #f59e0b;">Current +1 (7)</strong> Ã¢â€ â€™ Repeat Ã¢â€ â€™ 
+                                    <strong style="color: #10b981;">Max Reps (8)</strong> Ã¢â€ â€™ 
+                                    <strong style="color: #ef4444;">+1kg weight</strong>, reset to <strong style="color: #3b82f6;">Min (6)</strong>
+                                </div>
+
+                                <button class="btn btn-primary" id="addExerciseBtn" type="button">Ã¢Å¾â€¢ Add Exercise</button>
+                            </div>
+
+                            <!-- Current Routine -->
+                            <div class="card">
+                                <h2>Ã°Å¸â€œâ€¹ Current Routine</h2>
+                                <input type="text" id="routineNameInput" placeholder="Routine name (e.g., Push Day, Leg Day)" style="margin-bottom: 15px; width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 8px;">
+                                <div id="routineTable" style="margin-bottom: 15px;"></div>
+                                <div style="display: flex; gap: 10px;">
+                                    <button class="btn btn-success" id="saveRoutineBtn" type="button">Ã°Å¸â€™Â¾ Save Routine</button>
+                                    <button class="btn btn-danger" id="clearRoutineBtn" type="button">Ã°Å¸â€”â€˜Ã¯Â¸Â Clear</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Saved Routines -->
+                        <div class="card" style="margin-top: 25px;">
+                            <h2>Ã°Å¸â€œÅ¡ Saved Routines</h2>
+                            <div id="routinesList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WORKOUT LOG TAB -->
+                <div id="workout" class="tab-pane">
+                    <div class="container">
+                        <!-- Log Workout - Clean Single Card -->
+                        <div class="card" style="margin-bottom: 25px;">
+                            <h2>Ã°Å¸Ââ€¹Ã¯Â¸Â Log Workout</h2>
+                            <p style="margin-bottom: 15px; color: var(--text-secondary); font-size: 14px;">
+                                Select a routine and start logging your workout. Rest timer available in floating window! Ã¢ÂÂ±Ã¯Â¸Â
+                            </p>
+                            <div style="display: flex; gap: 10px;">
+                                <select id="logRoutineSelect" style="flex: 1;"></select>
+                                <button class="btn btn-primary" id="startWorkoutBtn" type="button">Ã¢â€“Â¶Ã¯Â¸Â Start Workout</button>
+                            </div>
+                        </div>
+
+                        <!-- Active Workout Container -->
+                        <div id="activeWorkoutContainer" style="display: none; margin-bottom: 25px;">
+                            <div class="card">
+                                <div id="workoutLogTable"></div>
+                            </div>
+                        </div>
+
+                        <!-- Workout History -->
+                        <div class="card">
+                            <h2>Ã°Å¸â€œâ€“ Recent Workouts</h2>
+                            <div id="workoutHistory">
+                                <p class="placeholder">Workout history coming soon...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="init-manager.js"></script>
+    <script src="state-manager.js"></script>
+    <script src="modal-utils.js"></script>
+    <script src="toast-notifications.js"></script>
+    <script src="api-client.js"></script>
+    <script src="app.js"></script>
+    
+    <!-- Calculator Modules -->
+    <script src="calculator-core.js"></script>
+    <script src="calculator-bmi.js"></script>
+    <script src="calculator-results.js"></script>
+    <script src="calculator-events.js"></script>
+    
+    <!-- Tracker Modules -->
+    <script src="drag-drop.js"></script>
+    <script src="tracker.js"></script>
+    <script src="waist-tracker.js"></script>
+    
+    <!-- Bodybuilding Modules -->
+    <script src="bodybuilding-routine-builder.js"></script>
+    <script src="bodybuilding-routine-manager.js"></script>
+    
+    <!-- Modular Workout Logger -->
+    <script src="bodybuilding-workout-logger-core.js?v=1770754307"></script>
+    <script src="bodybuilding-workout-logger-ui.js?v=1770754307"></script>
+    <script src="bodybuilding-workout-logger-data.js?v=1770754307"></script>
+    <script src="bodybuilding-workout-logger-history.js?v=1770754307"></script>
+    <script src="bodybuilding-workout-logger-set-tracker.js?v=1770754307"></script>
+    <script src="workout-completion-celebration.js?v=1770754307"></script>
+    <script src="bodybuilding-custom-exercises.js?v=1770754307"></script>
+    <script src="bodybuilding-core.js?v=1770754307"></script>
+    
+    <!-- Rest Timer -->
+    <script src="rest-timer.js"></script>
+</body>
+</html>

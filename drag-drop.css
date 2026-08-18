@@ -1,0 +1,107 @@
+/* drag-drop.css - Enhanced Drag and Drop Styles */
+
+/* Draggable row styles */
+.draggable-row {
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.draggable-row:hover {
+    cursor: grab !important;
+}
+
+.draggable-row:active {
+    cursor: grabbing !important;
+}
+
+/* Drag handle column */
+.draggable-row td:first-child {
+    cursor: grab !important;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.draggable-row:hover td:first-child {
+    opacity: 1;
+}
+
+/* While dragging */
+.draggable-row.dragging {
+    opacity: 0.4 !important;
+    background: var(--primary) !important;
+    color: white !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Drop zone indicator */
+.draggable-row.drag-over {
+    border-top: 3px solid var(--primary) !important;
+    background: rgba(102, 126, 234, 0.1) !important;
+}
+
+.draggable-row.drag-over-top {
+    border-top: 3px solid var(--primary) !important;
+}
+
+.draggable-row.drag-over-bottom {
+    border-bottom: 3px solid var(--primary) !important;
+}
+
+/* Smooth animation when reordering */
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.draggable-row.just-dropped {
+    animation: slideIn 0.3s ease;
+}
+
+/* Drag handle icon styling */
+.drag-handle {
+    font-size: 16px;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.draggable-row:hover .drag-handle {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Prevent text selection during drag */
+.draggable-row * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Dark mode adjustments */
+:root.dark-mode .draggable-row.dragging {
+    background: var(--primary) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+:root.dark-mode .draggable-row.drag-over {
+    background: rgba(102, 126, 234, 0.2) !important;
+}
+
+/* Tablet/Mobile adjustments */
+@media (max-width: 768px) {
+    .drag-handle {
+        font-size: 14px;
+    }
+    
+    .draggable-row td:first-child {
+        width: 30px;
+        padding: 8px !important;
+    }
+}

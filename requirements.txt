@@ -1,0 +1,5 @@
+# requirements.txt - Native Desktop Application
+# Updated to fix WebView2 initialization error
+
+pywebview>=5.1
+pywin32>=305  # Required for Windows window management
